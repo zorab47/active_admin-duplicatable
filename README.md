@@ -3,8 +3,20 @@
 Simple duplication of [ActiveAdmin][] resources.
 
 Allow user duplication of [ActiveAdmin][] resources through the power of the
-Amoeba gem. Resource duplication can be performed by either persisting the model
-and its relations, or by pre-filling a new resource's form fields with defaults.
+[Amoeba][] gem. Resource duplication can be performed by either persisting the
+model and its relations, or by pre-filling a new resource's form fields with
+defaults.
+
+## Usage
+
+Add duplication functionality a Post resource. See [Duplicatable][] for
+documentation.
+
+```ruby
+ActiveAdmin.register Post do
+  duplicatable
+end
+```
 
 ## Installation
 
@@ -27,3 +39,5 @@ And then execute:
 5. Create a new Pull Request
 
 [ActiveAdmin]: https://github.com/gregbell/active_admin
+[Amoeba]: https://github.com/rocksolidwebdesign/amoeba
+[Duplicatable]: lib/active_admin/duplicatable.rb
