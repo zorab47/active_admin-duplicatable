@@ -9,7 +9,7 @@ defaults.
 
 ## Usage
 
-Add duplication functionality a Post resource. See [Duplicatable][] for
+Add duplication functionality to a Post resource. See [Duplicatable][] for
 documentation.
 
 ```ruby
