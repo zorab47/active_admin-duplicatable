@@ -1,5 +1,9 @@
 # ActiveAdmin::Duplicatable
 
+[![Gem Version](https://badge.fury.io/rb/active_admin-duplicatable.svg)](http://badge.fury.io/rb/active_admin-duplicatable)
+
+## Description
+
 Simple duplication of [ActiveAdmin][] resources.
 
 Allow user duplication of [ActiveAdmin][] resources through the power of the
