@@ -38,6 +38,11 @@ And then execute:
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
 
+## Versioning
+
+Follows [Semantic Versioning 2.0.0][Semver]
+
 [ActiveAdmin]: https://github.com/gregbell/active_admin
 [Amoeba]: https://github.com/rocksolidwebdesign/amoeba
 [Duplicatable]: lib/active_admin/duplicatable.rb
+[Semver]: http://semver.org/spec/v2.0.0.html
