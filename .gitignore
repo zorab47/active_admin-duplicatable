@@ -1,0 +1,4 @@
+.rspec
+.bundle/
+log/*.log
+pkg/
