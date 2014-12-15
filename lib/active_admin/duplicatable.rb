@@ -38,7 +38,9 @@ module ActiveAdmin
     # No return.
     def enable_resource_duplication_via_form
       action_item :only => [:show] do
-        link_to(I18n.t(:duplicate_model, default: "Duplicate %{model}", scope: [:active_admin], model: active_admin_config.resource_label), action: :new, _source_id: resource.id)
+        if controller.action_methods.include?('new') && authorized?(ActiveAdmin::Auth::CREATE, active_admin_config.resource_class)
+          link_to(I18n.t(:duplicate_model, default: "Duplicate %{model}", scope: [:active_admin], model: active_admin_config.resource_label), action: :new, _source_id: resource.id)
+        end
       end
 
       controller do
@@ -60,11 +62,16 @@ module ActiveAdmin
     # No return.
     def enable_resource_duplication_via_save
       action_item :only => [:show] do
-        link_to(I18n.t(:duplicate_model, default: "Duplicate %{model}", scope: [:active_admin], model: active_admin_config.resource_label), action: :duplicate)
+        if controller.action_methods.include?('new') && authorized?(ActiveAdmin::Auth::CREATE, active_admin_config.resource_class)
+          link_to(I18n.t(:duplicate_model, default: "Duplicate %{model}", scope: [:active_admin], model: active_admin_config.resource_label), action: :duplicate)
+        end
       end
 
       member_action :duplicate do
         resource  = resource_class.find(params[:id])
+
+        authorize! ActiveAdmin::Auth::CREATE, resource
+
         duplicate = resource.amoeba_dup
         if duplicate.save
           redirect_to({ action: :edit, id: duplicate.id }, flash: { notice: "#{active_admin_config.resource_label} was successfully duplicated." })
