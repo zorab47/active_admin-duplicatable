@@ -37,7 +37,10 @@ module ActiveAdmin
     #
     # No return.
     def enable_resource_duplication_via_form
-      action_item :only => [:show] do
+      parameters = [:only => [:show]]
+      parameters.unshift :duplicate if method(:action_item).parameters.count == 3
+
+      action_item parameters do
         if controller.action_methods.include?('new') && authorized?(ActiveAdmin::Auth::CREATE, active_admin_config.resource_class)
           link_to(I18n.t(:duplicate_model, default: "Duplicate %{model}", scope: [:active_admin], model: active_admin_config.resource_label), action: :new, _source_id: resource.id)
         end
@@ -61,7 +64,10 @@ module ActiveAdmin
     #
     # No return.
     def enable_resource_duplication_via_save
-      action_item :only => [:show] do
+      parameters = [:only => [:show]]
+      parameters.unshift :duplicate if method(:action_item).parameters.count == 3
+
+      action_item parameters do
         if controller.action_methods.include?('new') && authorized?(ActiveAdmin::Auth::CREATE, active_admin_config.resource_class)
           link_to(I18n.t(:duplicate_model, default: "Duplicate %{model}", scope: [:active_admin], model: active_admin_config.resource_label), action: :duplicate)
         end
