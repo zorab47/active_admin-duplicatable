@@ -91,7 +91,7 @@ module ActiveAdmin
     # Returns Array of parameters.
     def compatible_action_item_parameters
       parameters = [{ :only => [:show] }]
-      parameters.unshift(:duplicate_button) if action_item_name_required?
+      parameters.unshift(:duplicatable_duplicate) if action_item_name_required?
       parameters
     end
 
