@@ -37,10 +37,7 @@ module ActiveAdmin
     #
     # No return.
     def enable_resource_duplication_via_form
-      parameters = [:only => [:show]]
-      parameters.unshift :duplicate_button if method(:action_item).parameters.count == 3
-
-      action_item *parameters do
+      action_item(*compatible_action_item_parameters) do
         if controller.action_methods.include?('new') && authorized?(ActiveAdmin::Auth::CREATE, active_admin_config.resource_class)
           link_to(I18n.t(:duplicate_model, default: "Duplicate %{model}", scope: [:active_admin], model: active_admin_config.resource_label), action: :new, _source_id: resource.id)
         end
@@ -64,10 +61,7 @@ module ActiveAdmin
     #
     # No return.
     def enable_resource_duplication_via_save
-      parameters = [:only => [:show]]
-      parameters.unshift :duplicate_button if method(:action_item).parameters.count == 3
-
-      action_item *parameters do
+      action_item(*compatible_action_item_parameters) do
         if controller.action_methods.include?('new') && authorized?(ActiveAdmin::Auth::CREATE, active_admin_config.resource_class)
           link_to(I18n.t(:duplicate_model, default: "Duplicate %{model}", scope: [:active_admin], model: active_admin_config.resource_label), action: :duplicate)
         end
@@ -87,6 +81,23 @@ module ActiveAdmin
       end
     end
 
+    # For ActiveAdmin `action_item` compatibility.
+    #
+    # - When ActiveAdmin is less than 1.0.0.pre1 exclude name parameter from
+    #   calls to `action_item` for compatibility.
+    # - When 1.0.0.pre1 or greater provide name to `action_item` to avoid the
+    #   warning message, and later an error.
+    #
+    # Returns Array of parameters.
+    def compatible_action_item_parameters
+      parameters = [{ :only => [:show] }]
+      parameters.unshift(:duplicate_button) if action_item_name_required?
+      parameters
+    end
+
+    def action_item_name_required?
+      method(:action_item).parameters.count == 3
+    end
   end
 end
 
