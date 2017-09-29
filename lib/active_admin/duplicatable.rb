@@ -23,6 +23,8 @@ module ActiveAdmin
 
       if via == :save
         enable_resource_duplication_via_save
+      elsif via != :form
+        enable_resource_duplication_via_custom_method(via)
       else
         enable_resource_duplication_via_form
       end
@@ -76,6 +78,36 @@ module ActiveAdmin
         if duplicate.save
           redirect_to({ action: :edit, id: duplicate.id }, flash: { notice: "#{active_admin_config.resource_label} was successfully duplicated." })
         else
+          redirect_to({ action: :show }, flash: { error: "#{active_admin_config.resource_label} could not be duplicated." })
+        end
+      end
+    end
+
+    # Enables resource duplication via a custom method
+    #
+    # - Adds a duplicate action button.
+    # - Calls a custom duplication method on the model. The method should
+    #   handle any copying of data and persistence of the new record.
+    # - Redirects the user to edit the newly duplicated resource.
+    #
+    # No return.
+    def enable_resource_duplication_via_custom_method(method)
+      action_item(*compatible_action_item_parameters) do
+        if controller.action_methods.include?('new') && authorized?(ActiveAdmin::Auth::CREATE, active_admin_config.resource_class)
+          link_to(I18n.t(:duplicate_model, default: "Duplicate %{model}", scope: [:active_admin], model: active_admin_config.resource_label), action: :duplicate)
+        end
+      end
+
+      member_action :duplicate do
+        resource = resource_class.find(params[:id])
+
+        authorize! ActiveAdmin::Auth::CREATE, resource
+
+        begin
+          duplicate = resource.send method
+          redirect_to({ action: :edit, id: duplicate.id }, flash: { notice: "#{active_admin_config.resource_label} was successfully duplicated." })
+        rescue => e
+          Rails.logger.warn(e)
           redirect_to({ action: :show }, flash: { error: "#{active_admin_config.resource_label} could not be duplicated." })
         end
       end
