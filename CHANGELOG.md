@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.3.0] - 2017-10-03
+
+### Added
+
+- Allow custom duplication methods in the `:via` option. Rather than always
+  calling `#amoeba_dup`, it can be configured to call any method.
+
 ## [0.2.0] - 2015-07-23
 
 - Avoid ActiveAdmin `1.0.0.pre1` deprecation warning when `#action_item` isn't
@@ -20,6 +27,7 @@ All notable changes to this project will be documented in this file.
 
 - Initial release
 
-[unreleased]: https://github.com/zorab47/active_admin-duplicatable/compare/v0.2.0...HEAD
+[unreleased]: https://github.com/zorab47/active_admin-duplicatable/compare/v0.3.0...HEAD
 [0.1.0]: https://github.com/zorab47/active_admin-duplicatable/compare/v0.0.1...v0.1.0
 [0.2.0]: https://github.com/zorab47/active_admin-duplicatable/compare/v0.1.0...v0.2.0
+[0.3.0]: https://github.com/zorab47/active_admin-duplicatable/compare/v0.2.0...v0.3.0
