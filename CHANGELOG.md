@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Switch from Rail's `before_filter` to `before_action`. The method
+- Switch from Rails' `before_filter` to `before_action`. The method
   `before_filter` was deprecated in Rails 5.0 and removed in Rails 5.1.
 
 ## [0.3.0] - 2017-10-03
