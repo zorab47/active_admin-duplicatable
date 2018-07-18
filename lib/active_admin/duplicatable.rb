@@ -46,7 +46,7 @@ module ActiveAdmin
       end
 
       controller do
-        before_filter only: :new do
+        before_action only: :new do
           if !params[:_source_id].blank?
             source = resource_class.find(params[:_source_id])
             @resource ||= source.amoeba_dup if source
