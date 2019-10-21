@@ -70,8 +70,6 @@ module ActiveAdmin
       end
 
       member_action :duplicate do
-        resource  = resource_class.find(params[:id])
-
         authorize! ActiveAdmin::Auth::CREATE, resource
 
         duplicate = resource.amoeba_dup
@@ -99,8 +97,6 @@ module ActiveAdmin
       end
 
       member_action :duplicate do
-        resource = resource_class.find(params[:id])
-
         authorize! ActiveAdmin::Auth::CREATE, resource
 
         begin
